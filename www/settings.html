@@ -1,0 +1,321 @@
+<!DOCTYPE html><html><!-- InstanceBegin template="/Templates/header.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <!-- InstanceBeginEditable name="doctitle" -->
+    <title>GGN Research</title>
+    <!-- InstanceEndEditable -->
+    <script src="js/jquery.min.js"></script> 
+<script src="js/custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script> 
+<script type="text/javascript" src="PushNotification.js"></script>
+<script src="js/bootstrap.js"></script>
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+</head>
+<body>
+	
+	<!--HEADER START--> 
+	<header>
+		<div class="logo-header div-table">
+			<div class="div-row">
+				
+				<div class="header-left div-cell">
+					<nav class="nav is-fixed" role="navigation">
+					  <div class="wrapper wrapper-flush">
+						<button class="nav-toggle">
+						<div class="icon-menu"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span> </div>
+						</button>
+                        
+                        <a href="#" id="ggn-contact"></a>
+						
+					  </div>
+					</nav>
+				</div>
+				
+				<div class="header-right div-cell">
+					<img src="images/header-logo.png" style=""/>
+				</div>
+				
+			</div>
+		</div>
+	</header>
+	<!--HEADER END-->     
+    
+    
+    <div class="main-wrapper">
+         
+        <!---->
+        <div class="nav-container">
+        <div class="nav-bg">
+        <ul class="nav-menu menu main-navigation">
+            <li class="has-dropdown"><a href="#"><img src="images/reports.png"/>Reports <span class="label">PRO</span></a>
+                <ul>
+                    <li><a href="#">All</a></li>					  
+                    <li><a href="#">Daily Reports</a></li>					  
+				  							  					  
+                </ul>
+            </li>
+            <li><a href="#"><img src="images/sms.png"/>SMS</a> </li>
+            <li><a href="#"><img src="images/favorites.png"/>favorite</a> </li>
+            <li><a href="#"><img src="images/search.png"/>Quick Search</a> </li>
+            <li><a href="#"><img src="images/calendar.png"/>Calender</a> </li>
+            <li class="has-dropdown"><a href="#"><img src="images/information.png"/>Useful Information</a>
+                <ul>
+                  <li><a  href="#">asd</a></li> 
+                </ul>
+            </li>	
+            <li><a href="#"><img src="images/settings.png"/>Settings</a> </li>
+            <li><a href="#"><img src="images/ggn.png"/>About</a> </li>
+        </ul>
+        </div>
+        </div>
+        <!----> 
+        
+        <!-- InstanceBeginEditable name="header" -->
+        <section class="breadcrumb">
+            <ul></ul>
+        </section>  
+        <section class="mcx-strip"></section> 
+      
+     <!--MAIN CONTAINER START-->
+     <div class="container">
+     
+     
+     
+     
+     
+     
+     	<section class="settings-list">
+        	<ul></ul>
+        </section>
+     
+     
+     
+     
+     
+     
+     
+     </div>
+     <!--MAIN CONTAINER END-->
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+	<footer>
+     	<section class="affiliate-strip"></section>
+     	
+     
+     </footer>  
+     
+     
+     
+    
+
+     <!-- InstanceEndEditable -->
+     </div> 
+	 
+	 
+	 
+
+<script>
+window.localStorage.setItem("apiurl", "http://indorerajkot.com/ggnweb/sys_api/");
+var request = $.ajax({
+  url: window.localStorage.getItem("apiurl")+"mobile_master_list/"+gettoken(),
+  dataType: "html"
+});
+request.done(function(msg) {
+	//if(msg->status==1)
+		$('.main-navigation').html(msg)
+		navigationcall();
+	
+});
+ 
+request.fail(function( jqXHR, textStatus ) {
+  alert( "Request failed: " + textStatus );
+});
+
+$('#ggn-contact').click(function(){
+	navigator.app.exitApp();	
+})
+
+
+
+
+
+
+</script>
+</body>
+<!-- InstanceEnd --></html>
+
+
+<script>
+var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicity call 'app.receivedEvent(...);'
+
+	
+    onDeviceReady: function() {
+		
+		
+		if(window.localStorage.getItem("ggntoken")==null){
+			window.location.href = "token.html";
+		}else{
+			
+			app.fetchmcx();
+			app.fetchaff();
+			app.fetchrecords(1);
+			
+			}
+    },
+	
+	fetchrecords:function(pager){
+		$('.breadcrumb ul').html(decodeURIComponent(getParam('brdcum')))
+		
+		
+		var ur= window.localStorage.getItem("apiurl")+getParam('apiurl')+'/'+gettoken()
+		$.ajax({ url:  ur})
+		.done(function(d) {
+			var data=JSON.parse(d)
+			if(data['status']==0){
+				$('#footer_action').html(data['message'])
+			}else{
+				$('.settings-list ul').html(data['html']);
+				resized();
+				/*----------------------*/
+				$(".setting-block").unbind( "click" );
+				$(".setting-block").bind("click", function(){
+					var myobj=$(this)
+					var tabid=$(this).parents('li').attr('data-id')
+					var token=""
+					var key=0;
+					(myobj.attr('data-key')==1)? key=0 : key=1;
+					var qq=window.localStorage.getItem("apiurl")+"settings_tab_update/"+gettoken()+"&tab_id="+tabid+"&is_blocked="+key
+					$.ajax(qq).done(function(d) {
+						$(this).attr('data-key',key)
+						//is-blocked is-default
+						myobj.attr('data-key',key)
+						if(key==1) {
+						myobj.parents('li').addClass('is-blocked') 
+						}else{
+						myobj.parents('li').removeClass('is-blocked')
+						}
+					})
+				});
+				
+				
+				$(".setting-default").unbind( "click" );
+				$(".setting-default").bind("click", function(){
+					var myobj=$(this)
+					var tabid=$(this).parents('li').attr('data-id')
+					var token=""
+					var key=0;
+					(myobj.attr('data-key')==1)? key=0 : key=1;
+					var qq=window.localStorage.getItem("apiurl")+"settings_tab_update/"+gettoken()+"&tab_id="+tabid+"&is_default="+key
+					$.ajax(qq).done(function(d) {
+						
+						$(this).attr('data-key',key)
+						//is-blocked is-default
+						myobj.attr('data-key',key)
+						if(key==1) {
+						myobj.parents('li').addClass('is-default') 
+						}else{
+						myobj.parents('li').removeClass('is-default')
+						}
+					})
+				});
+				/*----------------------*/
+			}
+		})
+		.fail(function() {
+			alert( "We are unable to conect server, please try later." );
+		})
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	},
+	
+	fetchmcx:function(){
+		var jqxhr ="http://www.indorerajkot.com/ggnweb/sys_api/marque_list";
+		$.ajax(jqxhr)
+		.done(function(d) {
+			$('#mcx-strip').html(d)
+			//var height=$(window).height()-($('header').outerHeight()+$('footer').outerHeight())
+			//$('#report-list-holder').css('height',height)
+		})
+		return;	
+	},
+	fetchaff:function(){
+		var jqxhr ="http://www.indorerajkot.com/ggnweb/sys_api/affiliate_list";
+		$.ajax(jqxhr)
+		.done(function(d) {
+			$('#aff-strip').html(d)
+			//var height=$(window).height()-($('header').outerHeight()+$('footer').outerHeight())
+			//$('#report-list-holder').css('height',height)
+		})
+		return;	
+	}
+	
+    
+};
+</script>
+
+
+<script type="text/javascript">
+	app.initialize();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+        
+
+        

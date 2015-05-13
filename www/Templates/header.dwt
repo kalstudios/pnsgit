@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <!-- TemplateBeginEditable name="doctitle" -->
+    <title>GGN Research</title>
+    <!-- TemplateEndEditable -->
+    <script src="../js/jquery.min.js"></script> 
+<script src="../js/custom.js"></script>
+<script type="text/javascript" charset="utf-8" src="../cordova.js"></script> 
+<script type="text/javascript" src="../PushNotification.js"></script>
+<script src="../js/bootstrap.js"></script>
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+</head>
+<body>
+	
+	<!--HEADER START--> 
+	<header>
+		<div class="logo-header div-table">
+			<div class="div-row">
+				
+				<div class="header-left div-cell">
+					<nav class="nav is-fixed" role="navigation">
+					  <div class="wrapper wrapper-flush">
+						<button class="nav-toggle">
+						<div class="icon-menu"><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span> </div>
+						</button>
+                        
+                        <a href="#" id="ggn-contact"></a>
+						
+					  </div>
+					</nav>
+				</div>
+				
+				<div class="header-right div-cell">
+					<img src="../images/header-logo.png" style=""/>
+				</div>
+				
+			</div>
+		</div>
+	</header>
+	<!--HEADER END-->     
+    
+    
+    <div class="main-wrapper">
+         
+        <!---->
+        <div class="nav-container">
+        <div class="nav-bg">
+        <ul class="nav-menu menu main-navigation">
+            <li class="has-dropdown"><a href="#"><img src="../images/reports.png"/>Reports <span class="label">PRO</span></a>
+                <ul>
+                    <li><a href="#">All</a></li>					  
+                    <li><a href="#">Daily Reports</a></li>					  
+				  							  					  
+                </ul>
+            </li>
+            <li><a href="#"><img src="../images/sms.png"/>SMS</a> </li>
+            <li><a href="#"><img src="../images/favorites.png"/>favorite</a> </li>
+            <li><a href="#"><img src="../images/search.png"/>Quick Search</a> </li>
+            <li><a href="#"><img src="../images/calendar.png"/>Calender</a> </li>
+            <li class="has-dropdown"><a href="#"><img src="../images/information.png"/>Useful Information</a>
+                <ul>
+                  <li><a  href="#">asd</a></li> 
+                </ul>
+            </li>	
+            <li><a href="#"><img src="../images/settings.png"/>Settings</a> </li>
+            <li><a href="#"><img src="../images/ggn.png"/>About</a> </li>
+        </ul>
+        </div>
+        </div>
+        <!----> 
+        
+        <!-- TemplateBeginEditable name="header" -->
+        <section class="mcx-strip"></section> 
+      
+     <!--MAIN CONTAINER START-->
+     <div class="container">
+     <section class="token-page">
+        <div class="token-page-cell">
+            <div class="padding-bottom"><input name="tokenfield" id="tokenfield" placeholder="Enter token you have" ></div>
+            <div class="padding-bottom"><input type="submit" id="tokenbutton" value="SUBMIT" class="btn-gray"></div>
+            <div class="padding-top-20 padding-bottom-20"></div>
+            <div class="padding-top-20 padding-bottom-20"></div>
+          <div class="padding-top text-center"><button class="btn-maroon" id="call2cal" style="max-width:300px" ><span class="btn-calender-span">GGN Calender</span></button></div>
+        </div>
+
+     </section>
+     </div>
+     <!--MAIN CONTAINER END-->
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+	<footer>
+     <section class="affiliate-strip"></section>
+     	
+     
+     </footer>  
+     
+
+     <!-- TemplateEndEditable -->
+     </div> 
+	 
+	 
+	 
+
+<script>
+window.localStorage.setItem("apiurl", "http://indorerajkot.com/ggnweb/sys_api/");
+var request = $.ajax({
+  url: window.localStorage.getItem("apiurl")+"mobile_master_list/"+gettoken(),
+  dataType: "html"
+});
+request.done(function(msg) {
+	//if(msg->status==1)
+		$('.main-navigation').html(msg)
+		navigationcall();
+	
+});
+ 
+request.fail(function( jqXHR, textStatus ) {
+  alert( "Request failed: " + textStatus );
+});
+
+$('#ggn-contact').click(function(){
+	navigator.app.exitApp();	
+})
+
+
+
+
+
+
+</script>
+</body>
+</html>
